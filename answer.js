@@ -1,4 +1,3 @@
-// ฟังก์ชันตรวจสอบรหัส
 function checkAnswer() {
     let answerInput1 = document.getElementById('answer1');
     let answerInput2 = document.getElementById('answer2');
@@ -11,16 +10,20 @@ function checkAnswer() {
     let answer4 = answerInput4.value.trim().toLowerCase();
 
     let modalBody = document.querySelector('.modal-body');
-    let count = 0;
 
     // คำตอบที่ถูกต้องทั้งหมด
     let correctAnswers = ["universe", "everything", "answer", "ultimate"];
 
-    // ตรวจสอบคำตอบแต่ละคำ
-    if (correctAnswers.includes(answer1)) count++;
-    if (correctAnswers.includes(answer2)) count++;
-    if (correctAnswers.includes(answer3)) count++;
-    if (correctAnswers.includes(answer4)) count++;
+    // นำคำตอบทั้งหมดใส่ลงใน Set เพื่อลบคำตอบที่ซ้ำกัน
+    let userAnswers = new Set([answer1, answer2, answer3, answer4]);
+
+    // ตรวจสอบจำนวนคำตอบที่ถูกต้องเพียงครั้งเดียว
+    let count = 0;
+    userAnswers.forEach(answer => {
+        if (correctAnswers.includes(answer)) {
+            count++;
+        }
+    });
 
     // แสดงผลตามจำนวนที่ถูกต้อง
     if (count == 2) {
@@ -54,7 +57,8 @@ function checkAnswer() {
             }
         }, { once: true });
     });
-    console.log(count)
+
+    console.log(count);
 }
 
 // ฟังก์ชันที่ทำให้ฟังก์ชันตรวจสอบรหัสทำงานเมื่อกดปุ่มตรวจสอบรหัส
@@ -70,7 +74,6 @@ document.querySelectorAll('#answer1, #answer2, #answer3, #answer4').forEach(inpu
         }
     });
 });
-
 
 document.getElementById('checkAnswer').addEventListener('hidden.bs.modal', function () {
     location.reload();
